@@ -1,7 +1,7 @@
 # CompoundCalculator
 Notebook to calculate the masses of a compound and its modified forms (metabolite, adducts...)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/arbi56/CompoundCalculator.git/CompoundCalculator.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/arbi56/CompoundCalculator.git/CompoundCalculator)
 ## Background
 
 
