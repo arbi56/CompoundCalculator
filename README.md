@@ -1,6 +1,9 @@
 # CompoundCalculator
-## Background
 Notebook to calculate the masses of a compound and its modified forms (metabolite, adducts...)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/arbi56/CompoundCalculator/blob/master/CompoundCalculator.ipynb)
+## Background
+
 
 The intent is that this be used with the PCVG code which finds patterns that are correlated across a series of samples. In some cases (e.g. the roadside test data)
 these are mainly from a single sample and correspond to compounds resulting from a drug (therapeutic, recreational or drug of abuse), i.e. the parent compound and metaboltes. In other cases the target compound may be known, for example the vinpocetin data where vinpocetin was administerd to different rats.
