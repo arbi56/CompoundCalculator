@@ -1,22 +1,24 @@
 # CompoundCalculator
-Notebook to calculate the masses of a compound and its modified forms (metabolite, adducts...)
+2020113 Notebook to calculate the masses of a compound and its modified forms (metabolite, adducts...)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/github/arbi56/CompoundCalculator/blob/master/CompoundCalculator.ipynb)
 ## Background
 
 
-The intent is that this be used with the PCVG code which finds patterns that are correlated across a series of samples. In some cases (e.g. the roadside test data)
-these are mainly from a single sample and correspond to compounds resulting from a drug (therapeutic, recreational or drug of abuse), i.e. the parent compound and metaboltes. In other cases the target compound may be known, for example the vinpocetin data where vinpocetin was administerd to different rats.
+This notebook generates lists of potential masses that are used to help interpret complex mass spectra for single or multiple compounds. Use cases include:
 
-Thus a PCVG group may contain many peaks - metabolites, multimers, adduct forms, etc. - that arise from a single compound and the challenge is to identify them all when some may not be previously known. The idea is that once we have some evidence of a compound, for example ibuprofen in one of the roadside test samples, we can quickly calcluate the potential masses of metaboltes and adducts, etc. and compare them to the masses in the PCVG group. (If desired we can group the PCVG masses by retention time first).
+- PCVG finds patterns of ions that are correlated across a series of samples. In biological samples these can be from a single sample and correspond to compounds resulting from an unknown drug (therapeutic, recreational or drug of abuse) while in other cases the compound may be known, for example the Vinpocetin data where Vinpocetin was administered to different rats. Thus a PCVG group may contain many peaks - metabolites, multimers, adduct forms, etc. - that arise from a single compound and the challenge is to identify them all when some forms may not be previously known. The idea is that once we have some evidence of a compound, for example Ibuprofen in one of the roadside test samples, we can quickly calculate the potential masses of metabolites and adducts, etc. and compare them to the masses in the PCVG group.
+- Flow injection Analysis (FIA) or infusion of single compounds or simple mixtures can result in complex spectra that also contain adducts and multimers, but also ions corresponding to reactions between analytes or analytes and background compounds (see J Chrom A 2019(1600)-174 for example.) Here the tool can be used to iteratively generate lists with different compounds and modifications that explain the observed spectrum.
+
+A companion Notebook *(Match)* compares the generated lists to peak lists obtained experimentally.
 
 ## Approach
 CompoundCalculator is based on 'compositions' and 'limits'.
-- **Compositions** provide a name and a mass (note these are **not** elemental compositions!). They are used to define the base compound and possible modifications (metabolites and adducts). E.g. ('Na-H', 21.981944) specifies a adduct formed by sodium replacing a proton
+- **Compositions** provide a name, a mass and a 'Root' (note these are **not** elemental compositions!). They are used to define the base compound and possible modifications (metabolites and adducts). E.g. ('Na-H', 21.981944) specifies an adduct formed by sodium replacing a proton. The root field is used to track the initial compound so that complex lists can be sorted and filtered easily.
 - **Limits** define the maximum number for a particular modification, e.g (OH, 2) indicates there can be 1 or 2 hydroxy metabolites
 
 New entities are formed from others by adding the masses and appending the names. There is no attempt to validate the chemistry nor to remove redundant species (forms with the same mass).
-Entities are treated as neutral and the charge is provided by adding or deleting the mass of a proton. This works because we specifiy the adducts as replacement forms, i.e. (Na-H), which also generates the regular forms, since:
+Entities are treated as neutral and the charge is provided by adding or deleting the mass of a proton. This works because we specify the adducts as replacement forms, i.e. (Na-H), which also generates the regular forms, since:
 
     M + (Na - H) + H+  => [M + Na]+
 
@@ -24,50 +26,59 @@ but also means that we can specify multiple adduct additions without calculating
 
     M + 2(Na - H) + H+  => [M + 2Na - 2H + H]+  => [M + 2Na - H]+ 
 
-which would otherwise need an unique mass for 2Na-H. The approach also means that the same list of compounds and adducts can be used for both positive and negative modes, the only difference being whether the proton mass is added or subtracted.
+which would otherwise need a unique mass for 2Na-H. The approach also means that the same list of compounds and adducts can be used for both positive and negative modes, the only difference being whether the proton mass is added or subtracted.
 
-The core modification names and masses are stored in the Composition class as a dictionary, e.g. {....;'Na-H':21.981944;....} and initailized in the cell that defines the class: 
+The core modification names and masses are stored in the Composition class as a dictionary, e.g. {....;'Na-H':21.981944;....} and initialized in the cell that defines the class: 
 
     Composition.Mods = {...}.
 The dictionary can be modified to add different adducts and/or modifications.
 
 The calculator generates two lists that are later combined:
-- **adduct** forms are calculated by taking combinations of the allowed adduct forms up to a maximum number of modifications so it can calculate mixed forms such as [M + Na + K -H]+
+- **adduct** forms are calculated by taking combinations of the allowed adduct forms up to a maximum number of modifications so it can calculate mixed forms such as [M + Na + K - H]+
 - **compounds** are calculated by successively adding new forms generated by applying modifications to all of the compounds already in the list. This is performed in different steps as described below
 
 ## Compound generation
-The base compounds are specified as a list of (name, mass) tuples which allows the main compound and specific modifications, such as the loss of C2H4 in vinpocetin, to be considered.
+Base compounds are provided as a list of (name, mass) tuples which specifies the main compound(s) but allows other components or specific modifications, such as the loss of C2H4 in Vinpocetin, to be considered.
 
 Additional compounds are generated in steps, each of which extends the list by adding a different form of modification to those compounds already in the list. The stages are:
 
 1. **Phase 1 mods** Generally these are oxidative products such as -OH, -(OH)2,... etc. and are applied to the main compounds. The default list of modifications includes 'COOH' which corresponds to the conversion of -CH3 to -COOH that occurs in ibuprofen. Multiple modifications of the same kind are calculated but different kinds are not combined.
 2. **Phase 2 mods** These are conjugates such as glucuronides and sulphates and are applied to the base compounds and their phase 1 metabolites. As with phase 1 metabolites, multiple modifications of the same kind are calculated but different kinds are not combined.
-3. **Multimers and heterodimers** Multimers for each compound in the extended list are calculated up to a user specified limit, typically 2 or 3. If desired, the program can also calculate 'heterodimers', i.e. dimers formed by combining two different compounds rather than two of the same kind, i.e. A + B cf. 2A.
+3. **Multimers and heterodimers** Multimers for each compound in the extended list are calculated up to a user-specified limit, typically 2 or 3. If desired, the program can also calculate 'heterodimers', i.e. dimers formed by combining two different compounds rather than two of the same kind, i.e. A + B cf. 2A.
 
 ## Ion generation
-The final list of masses is generated by combining each of the compounds with each of the adducts and either adding or subtracting a proton.
+The final list of masses is generated by combining each of the compounds with each of the adducts and either adding or subtracting a proton. In some cases clusters of the adducts themselves can be observed, for example, clusters of sodium and potassium formates with or without the main analyte (JChromA 2019(1600)-174). These forms can be incorporated as neutral molecules, subject to mass limits and the existence of specific components, prior to de/protonation and without further adduct addition.
 
-As shown in the Notebook, it is convenient to specify the polarity and use it to determine whether to add or subtract the proton mass, but also to specify the metabolites and limits. This is useful since some metabolites, espcially glucronides and sulphates, are generally more intense in negative mode.
+As shown in the Notebook, it is convenient to specify the polarity and use it to determine whether to add or subtract the proton mass, but also to specify the metabolites and limits. This is useful since some metabolites, especially glucuronides and sulphates, are often more intense in negative mode.
+
+## Summary
+The compounds, parameters used and results are summarized in a cell that also save this information in a single line that can be written to the output file.
+
 
 # Output
-The Notebook can save masses less than an upper limit to a text file named according to the base name and the polarity; existing files will be overwritten.
+The Notebook can save masses less than an upper limit to a text file named according to the base name and the polarity; existing files will be overwritten. The file name used is based on the compound names, the polarity and whether the XIC format is used; it can optionally include the date and time the list was generated as a string YYMMDD_HHMMSS.
 
-A parameter ('write_locally') determines whether the file will be in the same location as the notebook or in a user-specified directory. The former is useful with Google's 'CoLab' since the file exists in a local, temporary wokspace from which it can be downloaded. The cell that implements the user-specified path code uses the python 'os' library to generate the output directory path based on a list of directory and sub-directory names in a platform-indpendent manner.
+A parameter ('write_locally') determines whether the file will be in the same location as the notebook or in a user-specified directory. The former is useful with Google's 'CoLab' since the file exists in a local, temporary workspace from which it can be downloaded. The cell that implements the user-specified path code uses the python 'os' library to generate the output directory path based on a list of directory and sub-directory names in a platform-independent manner.
+
+The first line of the output file contains the conditions string prefixed with a '#' character.
 
 The output can be in two forms:
 1. mass, name: a simple tab-separated list
-2. mass, xic width, name: a tab-delimited file that is designed for use with the PeakView 'Extract Ion Chormatograms' commmand which can accept external lists in the format (via 'Import')
+2. mass, XIC width, name: a tab-delimited file that is designed for use with the PeakView 'Extract Ion Chromatograms' command which can accept external lists in the format (via 'Import')
 
 # Instructions
-All of the user-defined parameters, incluing output file location, are set in the "Setup" section. When the parameters have been set the code can be executed with "Run selected cell and all below".
+All of the user-defined parameters, including output file location, are set in the "Setup" section. When the parameters have been set the code can be executed with "Run selected cell and all below".
 
 The parameters (with examples) are:
 
-- base_compounds = (Identifier,  MW) , e.g. [('Ibu', 206.1307)] see code for more examples
-- multimer_limit = 3            # maximum multimer count
-- max_adduct_count = 3          # total number of adducts allowed
-- ionization = 'negative'       # only 'negative' changes the settings...anything else is 'positive'
-- include_hetero_dimers = True  # if True, calculate dimers of *different* compounds
+- base_compounds = (Identifier,  MW)      e.g. [('Ibu', 206.1307)] see code for more examples
+- multimer_limit = 3                     # maximum multimer count
+- max_adduct_count = 3             # total number of adducts allowed
+- ionization = 'negative'              # only 'negative' changes the settings...anything else is 'positive'
+- include_hetero_dimers = True    # if True, calculate dimers of *different* compounds
+- include_adducts_as_compounds = False     #if True, adducts meeting the following conditions are appended to the compound list
+- max_adduct_as_compound_mass = 800    # upper mass for 'compounds as adducts'
+- adduct_as_compound_must_have = CH2O2  # adducts added as compounds must include this (e.g. formates)
 
 Output parameters. The default file name is based on the first compound name and the polarity selected but 'base_name' can be anything
 
@@ -76,20 +87,20 @@ Output parameters. The default file name is based on the first compound name and
  - xic_width = 0.0             # if 0 the normal output form is used...alternative, e.g. 0.01, to generate the PeakView compatible form
  - write_locally = False       # write to the same location as the notebook (useful for Colab); if 'False' a file path is required
 
-file path (used if write_locally = False)
+File path (used if write_locally = False)
 this is a convenient platform independent way to provide file paths as a list of directories
-- f_dir = os.sep + os.path.join('Users','ronbonner','Data','PCA')
+- f_dir = os.sep + os.path.join('Users','ronbonner','Data','Calculator')
 
-metabolite and adduct limits. The code shows a conveneint way to select values based on polarity
+Metabolite and adduct limits. Compositions can be exculded by removing them from the list or by setting the upper limit to zero. The code shows a conveneint way to select values based on polarity
 - phase1_limits = [('OH', 2), ('COOH', 1)]
 - phase2_limits = [('gluc', 1)]
 - adduct_limits = [('Na-H', 3), ('K-H', 2), ('NaAc',2) 
 - loss_limits = [('H2O',2), ('CO2',1)]
 
 # Comments
-Since compound and adduct generation are combinatorial, the final list of compounds can easilly be in the thousands.
+Since compound and adduct generation are combinatorial, the final list of compounds can easily be in the thousands.
 
-The program does not calculate isotope masses; although this would not be difficult to implement, it would dramatically increase the final number of forms.
+The program does not calculate isotope masses since this would dramatically increase the final number of forms. Code included in the 'Match' Notebook looks in the peak list so see if there are 13C forms corresponding to the matched masses
 
 Since the program has no chemical intelligence, there is no attempt to choose between forms that have the same mass or the same elemental composition. When matching, however, the form with the shortest name is often the best choice.
 
