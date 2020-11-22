@@ -14,9 +14,9 @@ Unmatched peaks greater than a given intensity threshold (percent base peak inte
 
 In order to ensure that isotope peaks stay with the monoisotopic peaks, the program only searches for 13C peaks for matched peaks. Peaks identified as isotopes can also match entries in the target ion list so that other possibilities are shown.
 
-The peak list must be tab-delimied and have mass values but can also contain columns for Retention Time (RT) and Intensity; the function that reads the peak list tries to determine which columns are present.
+The peak list must be tab-delimited and have mass values but can also contain columns for Retention Time (RT) and Intensity; the function that reads the peak list tries to determine which columns are present.
 
-Results can be saved in several ways including a simple mass/intensity list and more detailsd lists. The former is useful with PeakView which allows tezt lists to be imported as spectra and overlaid on the original data to vislauize the matches and highlight unmatched peaks.
+Results can be saved in several ways including a simple mass/intensity list and more detailed lists. The former is useful with PeakView which allows text lists to be imported as spectra and overlaid on the original data to visualize the matches and highlight unmatched peaks.
 
 ## Matching
 Base compounds are provided as a list of (name, mass) tuples which specifies the main compound(s) but allows other components, specific modifications, such as the loss of C2H4 in Vinpocetin, and unknowns to be considered.
