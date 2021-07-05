@@ -1,9 +1,9 @@
-# CompoundCalculator
-2020113 Notebook to calculate the masses of a compound and its modified forms (metabolite, adducts...)
+# CompoundCalculator Suite
+20210626 Notebooks to implement Multi-Layered Analysis (MLA) of Complex Mass Spectra
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/github/arbi56/CompoundCalculator/blob/master/CompoundCalculator.ipynb)
+[![Open Calculator In Colab](https://colab.research.google.com/assets/colab-badge.svg)]( https://colab.research.google.com/github/arbi56/CompoundCalculator/blob/master/CompoundCalculator.ipynb)
+
 ## Background
-
 
 This notebook generates lists of potential masses that are used to help interpret complex mass spectra for single or multiple compounds. Use cases include:
 
