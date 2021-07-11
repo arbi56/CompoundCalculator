@@ -1,7 +1,7 @@
 # CompoundCalculator Suite
 20210626 Notebooks to implement Multi-Layered Analysis (MLA) of Complex Mass Spectra
 
-Contains four Jupyter Notebooks that collectively provide tools for Multi-Layered Analysis (MLA), used to interpret Mass Spectra from one or more compounds with complex adduct patterns. The notebooks are written in Python 3 and can be used with a distribution such as Anaconda or Google’s ‘Colab’ (Collaborative laboratory) platform.
+Contains four Jupyter Notebooks that collectively provide tools for Multi-Layered Analysis (MLA), used to interpret Mass Spectra from one or more compounds with complex adduct patterns. The notebooks are written in Python 3 and can be used with a distribution such as Anaconda or Google’s ‘Colab’ (Collaborative laboratory) platform. Note that executing with Colab will require uploading the required text files and modifying the notebooks to remove the path definition code.
 
 ## MLA overview
 MLA provides an alternative approach to the interpretation (annotation) of complex mass spectra, obtained from single compounds with complex adduct patterns or from mixed spectra (e.g. co-eluting compounds) with adducts. It can also be used to explore spectra from related compounds such as metabolites or degradation products.
