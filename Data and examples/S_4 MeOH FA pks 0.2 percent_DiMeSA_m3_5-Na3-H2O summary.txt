@@ -1,0 +1,21 @@
+2021-07-05 08:56:08, 24 targets
+DiMeSA_m3_5-Na3-H2O pos.txt
+DiMeSA_m3_5-Na3-H2O
+Time:210705_085451
+Compounds:DiMeSA
+Multimer_limit:3
+Polarity:positive
+Adducts:('Na-H', 3)
+Max adduct count:5
+Losses:('H2O', 1)
+Match time: 210705_085608
+Peaks file: /Users/ronbonner/Data/SharedData/Test/S_4 MeOH FA pks 0.2 percent.txt
+2932 peaks, tic 397185.9, base peak 169.04554, inten 107995.3
+Matching amu half window: 0.005
+Matching ppm half window: 10 ppm
+Looking for <= 4 13C isotopes with half window 0.003
+14 peaks matched (38.1% tic), 14 total matches from 2932 peaks
+After 13C match 36 peaks matched (40.2% tic), 36 total matches from 2932 peaks
+2896 unmatched peaks gt 5.0%, Largest unmatched 463.134308, 42577.39799 39.4% base
+
+DiMeSA              	count:  36	inten sum     159608.5	% tic  40.2
