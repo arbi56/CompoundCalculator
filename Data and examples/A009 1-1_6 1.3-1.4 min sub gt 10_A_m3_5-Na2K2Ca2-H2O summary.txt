@@ -1,0 +1,21 @@
+2021-07-26 08:11:37, 156 targets
+A_m3_5-Na2K2Ca2-H2O pos.txt
+A_m3_5-Na2K2Ca2-H2O
+Time:210715_090453
+Compounds:A
+Multimer_limit:3
+Polarity:positive
+Adducts:('Na-H', 2),('K-H', 2),('Ca-2H', 2)
+Max adduct count:5
+Losses:('H2O', 1)
+Match time: 210726_081137
+Peaks file: /Users/ronbonner/Data/SharedData/Stricker spectra/A009 1-1_6 1.3-1.4 min sub gt 10.txt
+407 peaks, tic 159118.7, base peak 116.07102, inten 29552.1
+Matching amu half window: 0.005
+Matching ppm half window: 10 ppm
+Looking for <= 4 13C isotopes with half window 0.003
+16 matches = 64688.28 (40.7% tic), 16 total matches from 407 peaks
+After 13C match 26 matches = 68557.02 (43.1% tic), 26 total matches from 407 peaks
+381 unmatched peaks gt 5.0%, Largest unmatched 114.0674865, 22442.69554 75.9% base
+
+A                   	count:  26	inten sum      68557.0	% tic  43.1

@@ -1,0 +1,24 @@
+A-B_m3h_5-Na2K2Ca2-H2O;Time:210715_091314;Compounds:A-B;Multimer_limit:3;Heterodimers:True;Polarity:positive;Adducts:('Na-H', 2),('K-H', 2),('Ca-2H', 2); Max adduct count:5;Losses:('H2O', 1);Match time: 210726_081335;Peaks file: /Users/ronbonner/Data/SharedData/Stricker spectra/A009 1-1_6 1.3-1.4 min sub gt 10_A_m3_5-Na2K2Ca2-H2O residual.txt;381 peaks, tic 90558.0, base peak 114.06750, inten 22443.0;Matching amu half window: 0.005;Matching ppm half window: 10 ppm;Looking for <= 4 13C isotopes with half window 0.003;13 matches = 38014.00 (42.0% tic), 13 total matches from 381 peaks;After 13C match 22 matches = 40395.00 (44.6% tic), 22 total matches from 381 peaks;359 unmatched peaks gt 5.0%, Largest unmatched 132.077, 12557.0 56.0% base
+Pk_mass	Pk_inten	Delta_mmu	Pk_RT	Pk_index	Mono_pk	Match_mass	Match_root	Match_label
+114.0675	22443.0	1.1	0.0	15	15	114.0664	B           	B.H+
+115.0686	1186.0	-1.9	0.0	18	15	115.0705	B           	114.0675(+1)
+136.0477	874.0	-0.6	0.0	44	44	136.0483	B           	B.Na-H.H+
+137.0501	60.0	-0.6	0.0	46	44	137.0507	B           	136.0477(+1)
+152.0223	7870.0	0.0	0.0	66	66	152.0223	B           	B.K-H.H+
+153.0244	372.0	-0.9	0.0	67	66	153.0253	B           	152.0223(+1)
+227.1256	4483.0	0.1	0.0	179	179	227.1255	B           	(B)2.H+
+228.1278	506.0	-0.8	0.0	184	179	228.1286	B           	227.1256(+1)
+229.1304	565.0	0.4	0.0	186	186	229.1300	A           	A+B.H+
+230.1328	69.0	-0.6	0.0	190	186	230.1334	A           	229.1304(+1)
+249.1070	576.0	-0.5	0.0	213	213	249.1075	B           	(B)2.Na-H.H+
+250.1104	70.0	0.4	0.0	217	213	250.1100	B           	249.1070(+1)
+251.1134	187.0	1.4	0.0	219	219	251.1120	A           	A+B.Na-H.H+
+252.1165	19.0	0.1	0.0	222	219	252.1164	A           	251.1134(+1)
+265.0808	826.0	-0.6	0.0	240	240	265.0814	B           	(B)2.K-H.H+
+266.0828	88.0	-1.0	0.0	245	240	266.0838	B           	265.0808(+1)
+267.0786	59.0	1.6	0.0	247	247	267.0770	A           	A+B.Ca-2H.H+
+268.0804	11.0	-1.2	0.0	251	247	268.0816	A           	267.0786(+1)
+273.0960	65.0	2.1	0.0	259	259	273.0939	A           	A+B.(Na-H)2.H+
+289.0709	24.0	3.0	0.0	278	278	289.0679	A           	A+B.Na-H.K-H.H+
+362.1643	11.0	-2.3	0.0	343	343	362.1666	B           	(B)3.Na-H.H+
+438.0722	31.0	2.8	0.0	365	365	438.0694	B           	(B)3.Na-H.K-H.Ca-2H.H+
